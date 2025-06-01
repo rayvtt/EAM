@@ -4,65 +4,65 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Esquire Music Editorial Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <h1>Esquire Music Editorial</h1>
-        <p class="subtitle">curated, minimal, high-impact</p>
-    </header>
-    <main>
-        <div class="metrics-grid">
-            <div class="metric-card">
-                <span class="metric-value">4</span>
-                <span class="metric-label">articles in progress</span>
+    <div class="dashboard-container">
+        <!-- Header Section -->
+        <header class="dashboard-header">
+            <h1>Esquire Music Editorial</h1>
+            <div class="header-controls">
+                <button class="sync-button" id="sync-button">
+                    <i class="fas fa-sync"></i> Sync Now
+                </button>
+                <div class="status-indicator connected"></div>
             </div>
-            <div class="metric-card">
-                <span class="metric-value">3</span>
-                <span class="metric-label">published this month</span>
-            </div>
-            <div class="metric-card">
-                <span class="metric-value">6</span>
-                <span class="metric-label">social posts scheduled</span>
-            </div>
-            <div class="metric-card">
-                <span class="metric-value">2</span>
-                <span class="metric-label">deadlines this week</span>
-            </div>
+        </header>
+
+        <!-- Metrics Grid -->
+        <div class="metrics-grid" id="metrics-grid">
+            <!-- Dynamically populated by JavaScript -->
         </div>
-        <div class="section-header">
+
+        <!-- Editorial Calendar -->
+        <section class="calendar-section">
             <h2>Editorial Calendar</h2>
-        </div>
-        <div class="calendar-view">
-            <!-- Calendar placeholder -->
-            <div class="calendar-grid">
-                <div class="calendar-day">MON</div>
-                <div class="calendar-day">TUE</div>
-                <div class="calendar-day">WED</div>
-                <div class="calendar-day">THU</div>
-                <div class="calendar-day">FRI</div>
-                <div class="calendar-day">SAT</div>
-                <div class="calendar-day">SUN</div>
-                <!-- Calendar content would go here -->
+            <div class="calendar-grid" id="calendar"></div>
+        </section>
+
+        <!-- Content Pipeline -->
+        <section class="pipeline-section">
+            <h2>Content Pipeline</h2>
+            <div class="pipeline-stages">
+                <div class="pipeline-stage" data-stage="draft">
+                    <h3>Drafts (3)</h3>
+                    <div class="pipeline-items" id="draft-items"></div>
+                </div>
+                <div class="pipeline-stage" data-stage="editing">
+                    <h3>In Editing (2)</h3>
+                    <div class="pipeline-items" id="editing-items"></div>
+                </div>
+                <div class="pipeline-stage" data-stage="scheduled">
+                    <h3>Scheduled (4)</h3>
+                    <div class="pipeline-items" id="scheduled-items"></div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Social Media Integration -->
+    <aside class="social-sidebar">
+        <div class="social-header">
+            <h3>Social Media Queue</h3>
+            <div class="social-platforms">
+                <span class="platform instagram"><i class="fab fa-instagram"></i></span>
+                <span class="platform tiktok"><i class="fab fa-tiktok"></i></span>
             </div>
         </div>
-    </main>
-    <aside class="sidebar">
-        <div class="status-card">
-            <div class="status-indicator"></div>
-            <div class="status-text">
-                <span>Connected to Google Sheets</span>
-                <small>Last sync: 2 minutes ago</small>
-            </div>
-        </div>
-        <div class="section-header">
-            <h2>Immediate Actions</h2>
-        </div>
-        <div class="action-items">
-            <button class="action-btn">Review Draft</button>
-            <button class="action-btn">Schedule Post</button>
-        </div>
+        <div class="social-posts" id="social-posts"></div>
     </aside>
+
     <script src="app.js"></script>
 </body>
 </html>
