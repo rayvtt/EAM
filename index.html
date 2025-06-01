@@ -8,60 +8,176 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="dashboard-container">
-        <!-- Header Section -->
+    <div class="dashboard-wrapper">
+        <!-- Header -->
         <header class="dashboard-header">
-            <h1>Esquire Music Editorial</h1>
-            <div class="header-controls">
-                <button class="sync-button" id="sync-button">
-                    <i class="fas fa-sync"></i> Sync Now
-                </button>
-                <div class="status-indicator connected"></div>
+            <div class="header-content">
+                <h1>Esquire Music Editorial</h1>
+                <div class="header-actions">
+                    <div class="sync-status">
+                        <div class="status-indicator connected"></div>
+                        <span>Google Sheets Connected</span>
+                    </div>
+                    <button class="btn-primary" id="refresh-btn">
+                        <i class="fas fa-sync-alt"></i> Sync Now
+                    </button>
+                </div>
             </div>
         </header>
 
-        <!-- Metrics Grid -->
-        <div class="metrics-grid" id="metrics-grid">
-            <!-- Dynamically populated by JavaScript -->
+        <!-- Main Dashboard Grid -->
+        <div class="dashboard-grid">
+            <!-- Metrics Cards -->
+            <section class="metrics-section">
+                <div class="metrics-grid">
+                    <div class="metric-card" data-metric="articles">
+                        <div class="metric-icon">
+                            <i class="fas fa-edit"></i>
+                        </div>
+                        <div class="metric-content">
+                            <span class="metric-value" id="articles-count">12</span>
+                            <span class="metric-label">Articles in Progress</span>
+                        </div>
+                    </div>
+                    <div class="metric-card" data-metric="published">
+                        <div class="metric-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="metric-content">
+                            <span class="metric-value" id="published-count">8</span>
+                            <span class="metric-label">Published This Month</span>
+                        </div>
+                    </div>
+                    <div class="metric-card" data-metric="social">
+                        <div class="metric-icon">
+                            <i class="fas fa-share-alt"></i>
+                        </div>
+                        <div class="metric-content">
+                            <span class="metric-value" id="social-count">24</span>
+                            <span class="metric-label">Social Posts Scheduled</span>
+                        </div>
+                    </div>
+                    <div class="metric-card" data-metric="deadlines">
+                        <div class="metric-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="metric-content">
+                            <span class="metric-value" id="deadlines-count">3</span>
+                            <span class="metric-label">Upcoming Deadlines</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Article Pipeline -->
+            <section class="pipeline-section">
+                <h2>Editorial Pipeline</h2>
+                <div class="pipeline-board">
+                    <div class="pipeline-column" data-stage="draft">
+                        <h3>Drafts <span class="count">(5)</span></h3>
+                        <div class="pipeline-items" id="draft-items">
+                            <div class="pipeline-item" draggable="true">
+                                <h4>Interview: Jazz Renaissance</h4>
+                                <p>By Sarah Johnson</p>
+                                <div class="item-meta">
+                                    <span class="priority high">High Priority</span>
+                                    <span class="deadline">Due: June 5</span>
+                                </div>
+                            </div>
+                            <div class="pipeline-item" draggable="true">
+                                <h4>Album Review: Midnight Echoes</h4>
+                                <p>By Mike Chen</p>
+                                <div class="item-meta">
+                                    <span class="priority medium">Medium</span>
+                                    <span class="deadline">Due: June 8</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="pipeline-column" data-stage="review">
+                        <h3>In Review <span class="count">(3)</span></h3>
+                        <div class="pipeline-items" id="review-items">
+                            <div class="pipeline-item" draggable="true">
+                                <h4>Festival Coverage: Coachella 2025</h4>
+                                <p>By Alex Rivera</p>
+                                <div class="item-meta">
+                                    <span class="priority high">High Priority</span>
+                                    <span class="deadline">Due: June 3</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="pipeline-column" data-stage="scheduled">
+                        <h3>Scheduled <span class="count">(4)</span></h3>
+                        <div class="pipeline-items" id="scheduled-items">
+                            <div class="pipeline-item" draggable="true">
+                                <h4>Artist Spotlight: Rising Stars</h4>
+                                <p>By Emma Thompson</p>
+                                <div class="item-meta">
+                                    <span class="priority low">Low Priority</span>
+                                    <span class="deadline">Publish: June 10</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Calendar Section -->
+            <section class="calendar-section">
+                <h2>Editorial Calendar</h2>
+                <div class="calendar-wrapper">
+                    <div class="calendar-header">
+                        <button id="prev-month"><i class="fas fa-chevron-left"></i></button>
+                        <h3 id="calendar-title">June 2025</h3>
+                        <button id="next-month"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                    <div class="calendar-grid" id="calendar-grid">
+                        <!-- Calendar will be populated by JavaScript -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Social Media Queue -->
+            <section class="social-section">
+                <h2>Social Media Queue</h2>
+                <div class="social-platforms">
+                    <div class="platform-toggle active" data-platform="instagram">
+                        <i class="fab fa-instagram"></i>
+                        <span>Instagram</span>
+                    </div>
+                    <div class="platform-toggle" data-platform="tiktok">
+                        <i class="fab fa-tiktok"></i>
+                        <span>TikTok</span>
+                    </div>
+                </div>
+                <div class="social-queue" id="social-queue">
+                    <div class="social-post">
+                        <div class="post-content">
+                            <h4>Album Art Reveal</h4>
+                            <p>Behind the scenes of our latest cover story</p>
+                        </div>
+                        <div class="post-schedule">
+                            <span>Today, 3:00 PM</span>
+                            <button class="btn-edit"><i class="fas fa-edit"></i></button>
+                        </div>
+                    </div>
+                    <div class="social-post">
+                        <div class="post-content">
+                            <h4>Artist Interview Teaser</h4>
+                            <p>Exclusive preview of tomorrow's feature</p>
+                        </div>
+                        <div class="post-schedule">
+                            <span>Tomorrow, 10:00 AM</span>
+                            <button class="btn-edit"><i class="fas fa-edit"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </div>
-
-        <!-- Editorial Calendar -->
-        <section class="calendar-section">
-            <h2>Editorial Calendar</h2>
-            <div class="calendar-grid" id="calendar"></div>
-        </section>
-
-        <!-- Content Pipeline -->
-        <section class="pipeline-section">
-            <h2>Content Pipeline</h2>
-            <div class="pipeline-stages">
-                <div class="pipeline-stage" data-stage="draft">
-                    <h3>Drafts (3)</h3>
-                    <div class="pipeline-items" id="draft-items"></div>
-                </div>
-                <div class="pipeline-stage" data-stage="editing">
-                    <h3>In Editing (2)</h3>
-                    <div class="pipeline-items" id="editing-items"></div>
-                </div>
-                <div class="pipeline-stage" data-stage="scheduled">
-                    <h3>Scheduled (4)</h3>
-                    <div class="pipeline-items" id="scheduled-items"></div>
-                </div>
-            </div>
-        </section>
     </div>
-
-    <!-- Social Media Integration -->
-    <aside class="social-sidebar">
-        <div class="social-header">
-            <h3>Social Media Queue</h3>
-            <div class="social-platforms">
-                <span class="platform instagram"><i class="fab fa-instagram"></i></span>
-                <span class="platform tiktok"><i class="fab fa-tiktok"></i></span>
-            </div>
-        </div>
-        <div class="social-posts" id="social-posts"></div>
-    </aside>
 
     <script src="app.js"></script>
 </body>
