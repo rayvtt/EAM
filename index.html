@@ -5,449 +5,64 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Esquire Music Editorial Dashboard</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <div class="dashboard-layout">
-        <!-- Sidebar Navigation -->
-        <nav class="sidebar">
-            <div class="sidebar-header">
-                <h2>Esquire Music</h2>
-                <button class="theme-toggle" onclick="toggleTheme()" title="Toggle Dark Mode">
-                    <i class="fas fa-moon"></i>
-                </button>
+    <header>
+        <h1>Esquire Music Editorial</h1>
+        <p class="subtitle">curated, minimal, high-impact</p>
+    </header>
+    <main>
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <span class="metric-value">4</span>
+                <span class="metric-label">articles in progress</span>
             </div>
-            <ul class="nav-menu">
-                <li><a href="#dashboard" class="nav-link active" data-section="dashboard">
-                    <i class="fas fa-tachometer-alt"></i> Dashboard
-                </a></li>
-                <li><a href="#articles" class="nav-link" data-section="articles">
-                    <i class="fas fa-newspaper"></i> Articles
-                </a></li>
-                <li><a href="#social" class="nav-link" data-section="social">
-                    <i class="fas fa-hashtag"></i> Social Media
-                </a></li>
-                <li><a href="#calendar" class="nav-link" data-section="calendar">
-                    <i class="fas fa-calendar"></i> Calendar
-                </a></li>
-                <li><a href="#analytics" class="nav-link" data-section="analytics">
-                    <i class="fas fa-chart-bar"></i> Analytics
-                </a></li>
-                <li><a href="#settings" class="nav-link" data-section="settings">
-                    <i class="fas fa-cog"></i> Settings
-                </a></li>
-            </ul>
-        </nav>
-
-        <!-- Main Content -->
-        <main class="main-content">
-            <!-- Dashboard Section -->
-            <section id="dashboard" class="content-section active">
-                <div class="section-header">
-                    <h1>Editorial Dashboard</h1>
-                    <div class="header-actions">
-                        <button class="btn btn--primary" onclick="showAddArticleModal()">
-                            <i class="fas fa-plus"></i> New Article
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Key Metrics -->
-                <div class="metrics-grid">
-                    <div class="metric-card">
-                        <div class="metric-icon">
-                            <i class="fas fa-edit"></i>
-                        </div>
-                        <div class="metric-content">
-                            <h3 id="articles-in-progress">4</h3>
-                            <p>Articles in Progress</p>
-                        </div>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-icon">
-                            <i class="fas fa-check-circle"></i>
-                        </div>
-                        <div class="metric-content">
-                            <h3 id="published-this-month">3</h3>
-                            <p>Published This Month</p>
-                        </div>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-icon">
-                            <i class="fas fa-calendar-alt"></i>
-                        </div>
-                        <div class="metric-content">
-                            <h3 id="social-posts-scheduled">6</h3>
-                            <p>Social Posts Scheduled</p>
-                        </div>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-icon">
-                            <i class="fas fa-exclamation-triangle"></i>
-                        </div>
-                        <div class="metric-content">
-                            <h3 id="deadlines-this-week">2</h3>
-                            <p>Deadlines This Week</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Recent Activity & Deadline Alerts -->
-                <div class="dashboard-grid">
-                    <div class="card">
-                        <div class="card__header">
-                            <h3>Recent Activity</h3>
-                        </div>
-                        <div class="card__body">
-                            <div class="activity-feed" id="activity-feed">
-                                <!-- Activity items will be populated by JavaScript -->
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <div class="card__header">
-                            <h3>Upcoming Deadlines</h3>
-                        </div>
-                        <div class="card__body">
-                            <div class="deadline-list" id="deadline-list">
-                                <!-- Deadline items will be populated by JavaScript -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Google Sheets Integration Status -->
-                <div class="card integration-status">
-                    <div class="card__header">
-                        <h3>Google Sheets Integration</h3>
-                        <div class="status status--success">Connected</div>
-                    </div>
-                    <div class="card__body">
-                        <p>Last sync: <span id="last-sync">2 minutes ago</span></p>
-                        <button class="btn btn--secondary" onclick="syncGoogleSheets()">
-                            <i class="fas fa-sync"></i> Sync Now
-                        </button>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Articles Section -->
-            <section id="articles" class="content-section">
-                <div class="section-header">
-                    <h1>Article Management</h1>
-                    <div class="header-actions">
-                        <input type="text" class="form-control search-input" placeholder="Search articles..." id="article-search">
-                        <select class="form-control" id="article-filter">
-                            <option value="">All Types</option>
-                        </select>
-                        <button class="btn btn--primary" onclick="showAddArticleModal()">
-                            <i class="fas fa-plus"></i> Add Article
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Article Pipeline -->
-                <div class="pipeline">
-                    <div class="pipeline-columns" id="article-pipeline">
-                        <!-- Pipeline columns will be populated by JavaScript -->
-                    </div>
-                </div>
-            </section>
-
-            <!-- Social Media Section -->
-            <section id="social" class="content-section">
-                <div class="section-header">
-                    <h1>Social Media Planning</h1>
-                    <div class="header-actions">
-                        <button class="btn btn--primary" onclick="showAddSocialPostModal()">
-                            <i class="fas fa-plus"></i> Schedule Post
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Social Media Calendar -->
-                <div class="social-calendar">
-                    <div class="calendar-header">
-                        <button class="btn btn--secondary" onclick="previousWeek()">
-                            <i class="fas fa-chevron-left"></i>
-                        </button>
-                        <h3 id="current-week">Week of June 1, 2025</h3>
-                        <button class="btn btn--secondary" onclick="nextWeek()">
-                            <i class="fas fa-chevron-right"></i>
-                        </button>
-                    </div>
-                    <div class="calendar-grid" id="social-calendar-grid">
-                        <!-- Calendar will be populated by JavaScript -->
-                    </div>
-                </div>
-
-                <!-- Engagement Chart -->
-                <div class="card">
-                    <div class="card__header">
-                        <h3>Engagement Overview</h3>
-                    </div>
-                    <div class="card__body">
-                        <canvas id="engagement-chart" height="300"></canvas>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Calendar Section -->
-            <section id="calendar" class="content-section">
-                <div class="section-header">
-                    <h1>Editorial Calendar</h1>
-                    <div class="header-actions">
-                        <button class="btn btn--secondary" onclick="exportCalendar()">
-                            <i class="fas fa-download"></i> Export
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Monthly Calendar -->
-                <div class="monthly-calendar">
-                    <div class="calendar-navigation">
-                        <button class="btn btn--secondary" onclick="previousMonth()">
-                            <i class="fas fa-chevron-left"></i>
-                        </button>
-                        <h3 id="current-month">June 2025</h3>
-                        <button class="btn btn--secondary" onclick="nextMonth()">
-                            <i class="fas fa-chevron-right"></i>
-                        </button>
-                    </div>
-                    <div class="monthly-grid" id="monthly-calendar-grid">
-                        <!-- Monthly calendar will be populated by JavaScript -->
-                    </div>
-                </div>
-            </section>
-
-            <!-- Analytics Section -->
-            <section id="analytics" class="content-section">
-                <div class="section-header">
-                    <h1>Analytics & Reports</h1>
-                    <div class="header-actions">
-                        <button class="btn btn--secondary" onclick="exportReport()">
-                            <i class="fas fa-file-pdf"></i> Export Report
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Analytics Grid -->
-                <div class="analytics-grid">
-                    <div class="card">
-                        <div class="card__header">
-                            <h3>Article Completion Rates</h3>
-                        </div>
-                        <div class="card__body">
-                            <canvas id="completion-chart" height="300"></canvas>
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <div class="card__header">
-                            <h3>Priority Distribution</h3>
-                        </div>
-                        <div class="card__body">
-                            <canvas id="priority-chart" height="300"></canvas>
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <div class="card__header">
-                            <h3>Content Types</h3>
-                        </div>
-                        <div class="card__body">
-                            <canvas id="content-types-chart" height="300"></canvas>
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <div class="card__header">
-                            <h3>Team Productivity</h3>
-                        </div>
-                        <div class="card__body">
-                            <canvas id="productivity-chart" height="300"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Settings Section -->
-            <section id="settings" class="content-section">
-                <div class="section-header">
-                    <h1>Settings & Configuration</h1>
-                </div>
-
-                <div class="settings-grid">
-                    <!-- Google Sheets Integration -->
-                    <div class="card">
-                        <div class="card__header">
-                            <h3>Google Sheets Integration</h3>
-                        </div>
-                        <div class="card__body">
-                            <div class="form-group">
-                                <label class="form-label">Spreadsheet URL</label>
-                                <input type="url" class="form-control" value="https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms" readonly>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">Sync Frequency</label>
-                                <select class="form-control">
-                                    <option>Every 5 minutes</option>
-                                    <option>Every 15 minutes</option>
-                                    <option>Every hour</option>
-                                    <option>Manual only</option>
-                                </select>
-                            </div>
-                            <button class="btn btn--primary">
-                                <i class="fas fa-link"></i> Reconnect
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Notification Settings -->
-                    <div class="card">
-                        <div class="card__header">
-                            <h3>Notifications</h3>
-                        </div>
-                        <div class="card__body">
-                            <div class="form-group">
-                                <label class="checkbox-label">
-                                    <input type="checkbox" checked> Deadline reminders
-                                </label>
-                            </div>
-                            <div class="form-group">
-                                <label class="checkbox-label">
-                                    <input type="checkbox" checked> Status updates
-                                </label>
-                            </div>
-                            <div class="form-group">
-                                <label class="checkbox-label">
-                                    <input type="checkbox"> Daily digest
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Export Settings -->
-                    <div class="card">
-                        <div class="card__header">
-                            <h3>Export & Backup</h3>
-                        </div>
-                        <div class="card__body">
-                            <button class="btn btn--secondary" onclick="exportData('csv')">
-                                <i class="fas fa-file-csv"></i> Export as CSV
-                            </button>
-                            <button class="btn btn--secondary" onclick="exportData('pdf')">
-                                <i class="fas fa-file-pdf"></i> Export as PDF
-                            </button>
-                            <button class="btn btn--secondary" onclick="backupData()">
-                                <i class="fas fa-cloud-upload-alt"></i> Backup to Cloud
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </main>
-    </div>
-
-    <!-- Add Article Modal -->
-    <div id="add-article-modal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Add New Article</h3>
-                <button class="modal-close" onclick="closeModal('add-article-modal')">
-                    <i class="fas fa-times"></i>
-                </button>
+            <div class="metric-card">
+                <span class="metric-value">3</span>
+                <span class="metric-label">published this month</span>
             </div>
-            <div class="modal-body">
-                <form id="add-article-form">
-                    <div class="form-group">
-                        <label class="form-label">Title</label>
-                        <input type="text" class="form-control" name="title" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Author</label>
-                        <input type="text" class="form-control" name="author" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Content Type</label>
-                        <select class="form-control" name="type" required>
-                            <!-- Options will be populated by JavaScript -->
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Target Word Count</label>
-                        <input type="number" class="form-control" name="targetWords" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Deadline</label>
-                        <input type="date" class="form-control" name="deadline" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Priority (1-10)</label>
-                        <input type="range" class="form-control" name="priority" min="1" max="10" value="5">
-                    </div>
-                </form>
+            <div class="metric-card">
+                <span class="metric-value">6</span>
+                <span class="metric-label">social posts scheduled</span>
             </div>
-            <div class="modal-footer">
-                <button class="btn btn--secondary" onclick="closeModal('add-article-modal')">Cancel</button>
-                <button class="btn btn--primary" onclick="addArticle()">Add Article</button>
+            <div class="metric-card">
+                <span class="metric-value">2</span>
+                <span class="metric-label">deadlines this week</span>
             </div>
         </div>
-    </div>
-
-    <!-- Add Social Post Modal -->
-    <div id="add-social-post-modal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Schedule Social Media Post</h3>
-                <button class="modal-close" onclick="closeModal('add-social-post-modal')">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form id="add-social-post-form">
-                    <div class="form-group">
-                        <label class="form-label">Platform</label>
-                        <select class="form-control" name="platform" required>
-                            <option value="Instagram">Instagram</option>
-                            <option value="TikTok">TikTok</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Post Type</label>
-                        <select class="form-control" name="type" required>
-                            <option value="Post">Post</option>
-                            <option value="Story">Story</option>
-                            <option value="Reel">Reel</option>
-                            <option value="Video">Video</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Content</label>
-                        <textarea class="form-control" name="content" rows="3" required></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Scheduled Date</label>
-                        <input type="datetime-local" class="form-control" name="scheduledDate" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Link to Article (Optional)</label>
-                        <select class="form-control" name="linkedArticle">
-                            <option value="">None</option>
-                            <!-- Options will be populated by JavaScript -->
-                        </select>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn--secondary" onclick="closeModal('add-social-post-modal')">Cancel</button>
-                <button class="btn btn--primary" onclick="addSocialPost()">Schedule Post</button>
+        <div class="section-header">
+            <h2>Editorial Calendar</h2>
+        </div>
+        <div class="calendar-view">
+            <!-- Calendar placeholder -->
+            <div class="calendar-grid">
+                <div class="calendar-day">MON</div>
+                <div class="calendar-day">TUE</div>
+                <div class="calendar-day">WED</div>
+                <div class="calendar-day">THU</div>
+                <div class="calendar-day">FRI</div>
+                <div class="calendar-day">SAT</div>
+                <div class="calendar-day">SUN</div>
+                <!-- Calendar content would go here -->
             </div>
         </div>
-    </div>
-
+    </main>
+    <aside class="sidebar">
+        <div class="status-card">
+            <div class="status-indicator"></div>
+            <div class="status-text">
+                <span>Connected to Google Sheets</span>
+                <small>Last sync: 2 minutes ago</small>
+            </div>
+        </div>
+        <div class="section-header">
+            <h2>Immediate Actions</h2>
+        </div>
+        <div class="action-items">
+            <button class="action-btn">Review Draft</button>
+            <button class="action-btn">Schedule Post</button>
+        </div>
+    </aside>
     <script src="app.js"></script>
 </body>
 </html>
